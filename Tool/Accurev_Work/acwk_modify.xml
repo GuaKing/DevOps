@@ -1,0 +1,8 @@
+<modifyIssue issueDB = "Casa_Depot">
+  <issue>
+    <issueNum
+        fid="1">XXX</issueNum>
+    <assignedTo
+        fid="14">YYY</assignedTo>
+  </issue>
+</modifyIssue>
