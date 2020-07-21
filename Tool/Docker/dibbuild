@@ -1,0 +1,41 @@
+#!/bin/bash
+
+update_dibenv(){
+
+docker pull registry.xxxx.com/releaseprocess/dib/dibenv
+docker tag registry.xxxxx.com/releaseprocess/dib/dibenv dibenv
+}
+
+if [ $# -lt 1 ]; then
+	echo Warnning: at lease one args 
+	echo \## usage :
+	echo \## dibbuild ./yourscript.sh
+	echo \##	
+	echo \## if your network status is not good , you can set a chinese mirror to instead.
+	echo \## like as :
+	echo \## export DIB_DISTRIBUTION_MIRROR="http://mirrors.aliyun.com/ubuntu"	
+	echo \## dibbuild ./packaging/genimage.sh	
+	exit 0
+fi
+
+if [ -z $TAR_PATH ]; then
+	echo \## TAR_PATH need to be define before running ! 
+	echo \## Please exec like this before running:xx.tar.gz
+	exit 0
+fi
+
+case $1 in
+	update)
+		update_dibenv
+		;;
+	*)
+		update_dibenv
+		cp ${TAR_PATH} $PWD
+		export TAR_PATH=$PWD/${TAR_PATH##*/}
+		touch env.list
+		echo Entering DIB ENV ....
+		# debug env
+		# docker run --rm -it dibenv env
+		docker run --rm --privileged -v $PWD:$PWD --env TAR_PATH --env DIB_DISTRIBUTION_MIRROR  -w $PWD  -it dibenv $*
+		;;
+esac
