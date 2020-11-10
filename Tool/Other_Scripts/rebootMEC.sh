@@ -1,8 +1,8 @@
 #!/usr/bin/expect
 set timeout 7200
-set USER root
+set USER xxxxxx
 set IP [lindex $argv 0]
-set PASS casa
+set PASS xxxxx
 
 
 spawn ssh $USER@$IP "reboot"
